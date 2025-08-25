@@ -46,7 +46,7 @@ THIRD_PARTY_APPS = [
 
 # Erst mal KEINE lokalen Apps, bis wir sie erstellt haben
 LOCAL_APPS = [
-    # 'apps.homepage',
+    'apps.homepage',
     # 'apps.common',
     # 'apps.plugins',
     # 'apps.leistungsnachweis',
