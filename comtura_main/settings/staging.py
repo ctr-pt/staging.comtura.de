@@ -5,6 +5,7 @@ DEBUG = True  # Für Staging noch Debug aktiviert
 SECRET_KEY = 'django-insecure-staging-key-for-staging-only'
 
 ALLOWED_HOSTS = ['staging.comtura.de']
+WAGTAILADMIN_BASE_URL = 'https://staging.comtura.de/cms_admin'
 
 # Staging-specific settings
 INTERNAL_IPS = ['127.0.0.1']
@@ -31,3 +32,5 @@ CSRF_COOKIE_SECURE = True
 
 # Staging-spezifische Email-Settings (falls gewünscht)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Emails in Console
+
+ROOT_URLCONF = 'comtura_main.urls'

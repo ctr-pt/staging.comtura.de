@@ -7,12 +7,8 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-dev-key-change-in-production'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'staging.comtura.de']
 
 # Application definition
@@ -48,14 +44,15 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 ]
 
+# Erst mal KEINE lokalen Apps, bis wir sie erstellt haben
 LOCAL_APPS = [
-    'apps.homepage',
-    'apps.common',
-    'apps.plugins',
-    'apps.leistungsnachweis',
-    'apps.zeiterfassung', 
-    'apps.stockmgmt',
-    'apps.ticketsystem',
+    # 'apps.homepage',
+    # 'apps.common',
+    # 'apps.plugins',
+    # 'apps.leistungsnachweis',
+    # 'apps.zeiterfassung', 
+    # 'apps.stockmgmt',
+    # 'apps.ticketsystem',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + WAGTAIL_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -92,7 +89,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'comtura_main.wsgi.application'
 
-# Database
+# Database - wird in staging.py/production.py überschrieben
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -130,22 +127,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = 'comtura IT-Servicegesellschaft'
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
-# Login/Logout URLs
-LOGIN_URL = '/cms-admin/login/'
+LOGIN_URL = '/ctr_admin/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Email Configuration
