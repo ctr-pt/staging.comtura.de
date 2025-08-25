@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block titel %}{{ page.title }} | comtura IT-Servicegesellschaft{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-primary mb-4">{{ page.title }}</h1>
+    
+    {% if page.intro_text %}
+        {{ page.intro_text|richtext }}
+    {% endif %}
+    
+    {% if page.requirements %}
+        <ul class="list-unstyled">
+            {% for req in page.requirements %}
+                <li>■ {{ req.value|richtext }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <ul class="list-unstyled">
+            <li>■ Sie verfügen über gute Hard- und Softwarekenntnisse sowie über gute Kenntnisse im Netzwerkbereich?</li>
+            <li>■ Sie besitzen einen Führerschein der Klasse B (3)?</li>
+            <li>■ Sie arbeiten gerne im Team und haben Freude im Umgang mit Kunden?</li>
+        </ul>
+    {% endif %}
+    
+    {% if page.closing_text %}
+        {{ page.closing_text|richtext }}
+    {% endif %}
+    
+    <!-- Job-Anzeigen -->
+    <div class="row mt-4">
+        {% for job in page.get_children.live %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ job.title }}</h5>
+                        <a href="{{ job.url }}" class="btn btn-outline-primary">Mehr erfahren</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titel %}{{ page.intro_title }} | comtura IT-Servicegesellschaft{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+<div class="container">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 text-primary mb-3">{{ page.intro_title }}</h1>
+            
+            <!-- Service Badges -->
+            <div class="mb-4">
+                <span class="badge bg-primary me-2 mb-2">Projektleitung</span>
+                <span class="badge bg-primary me-2 mb-2">IT-Bau</span>
+                <span class="badge bg-primary me-2 mb-2">WLAN-Ausleuchtung</span>
+                <span class="badge bg-primary me-2 mb-2">IMAC</span>
+                <span class="badge bg-primary me-2 mb-2">Rollout</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Intro Text -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    {% if page.intro_text %}
+                        {{ page.intro_text|richtext }}
+                    {% else %}
+                        <p class="lead">
+                            Die Comtura IT-Servicegesellschaft für Industrie und Handel ist ein innovatives 
+                            IT-Dienstleistungsunternehmen, das sich auf die Implementierung, Erneuerung und 
+                            Wartung der IT-Systemlandschaft für Unternehmen spezialisiert hat.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Description -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            {% if page.company_description %}
+                {{ page.company_description|richtext }}
+            {% else %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Unsere Zielgruppen sind ausschließlich Hersteller, Reseller, Value-Added Reseller, Systemhäuser, Systemintegratoren und Service-Dienstleister.</p>
+                        <p>Bei IT-Projekten, Bauvorhaben und Modernisierungen der IT-Infrastruktur mit dem richtigen Partner zusammenzuarbeiten, macht vieles einfacher und kosteneffizienter.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Wir sind seit vielen Jahren erfolgreich in diesem Bereich tätig und haben uns einen Namen als zuverlässiger Partner für unsere Kunden gemacht.</p>
+                        <p>Unser Team besteht aus erfahrenen IT-Experten, die über fundiertes Fachwissen und umfassende Erfahrung verfügen.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Standorte -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <h2 class="text-primary">Standorte</h2>
+            {% if page.standorte_text %}
+                {{ page.standorte_text|richtext }}
+            {% else %}
+                <p>Durch unsere Techniker-Standorte im gesamten Bundesgebiet, können wir unsere Dienstleistungen bundesweit durchführen.</p>
+                <p>An jedem Standort steht Ihnen erfahrenes Fachpersonal zur Verfügung die nach Bedarf auch gebündelt werden können.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Portfolio -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <h2 class="text-primary">Portfolio</h2>
+            <p>Unser Portfolio umfasst</p>
+            
+            {% if page.portfolio_items %}
+                <ul class="list-unstyled">
+                    {% for item in page.portfolio_items %}
+                        <li>■ {{ item.value|richtext }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul class="list-unstyled">
+                    <li>■ die Konzeption und Durchführung bundesweiter IT-Rollouts,</li>
+                    <li>■ die Installation und Inbetriebnahme von Kassen-, Digital Signage-, Videoüberwachungs- und Beschallungssystemen,</li>
+                    <li>■ die Installation, Qualifizierung und Zertifizierung der strukturierten Netzwerkverkabelung,</li>
+                    <li>■ den Aufbau und der Inbetriebnahme aller beteiligten aktiven Komponenten.</li>
+                    <li>■ die Ausleuchtung von WLAN-Netzwerken</li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block titel %}{{ page.title }} | comtura IT-Servicegesellschaft{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-primary mb-4">{{ page.title }}</h1>
+    
+    {% if page.contact_intro %}
+        {{ page.contact_intro|richtext }}
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Kontaktformular</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/kontakt/">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="firma" class="form-label">Firma</label>
+                            <input type="text" class="form-control" id="firma" name="firma">
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-Mail-Adresse *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefon" class="form-label">Telefonnummer</label>
+                            <input type="tel" class="form-control" id="telefon" name="telefon">
+                        </div>
+                        <div class="mb-3">
+                            <label for="anliegen" class="form-label">Ihr Anliegen *</label>
+                            <textarea class="form-control" id="anliegen" name="anliegen" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Absenden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">Kontaktdaten</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-primary">{{ page.company_name }}</h6>
+                    <p><strong>Geschäftsführer:</strong> {{ page.owner_name }}</p>
+                    
+                    <h6 class="text-primary mt-4">Hauptsitz</h6>
+                    <p>{{ page.main_address|linebreaksbr }}</p>
+                    
+                    <h6 class="text-primary mt-4">Verwaltung und Lager</h6>
+                    <p>{{ page.admin_address|linebreaksbr }}</p>
+                    <p>
+                        <strong>Tel:</strong> <a href="tel:{{ page.phone|cut:' '|cut:'('|cut:')'|cut:'-' }}">{{ page.phone }}</a><br>
+                        <strong>Fax:</strong> {{ page.fax }}<br>
+                        <strong>E-Mail:</strong> <a href="mailto:{{ page.email }}">{{ page.email }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
