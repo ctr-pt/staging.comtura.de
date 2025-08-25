@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('ctr_admin/', admin.site.urls),
-    path('cms_admin/', include(wagtailadmin_urls)),
+    path('cms-admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
 
     # Plugin URLs (noch zu definieren)
