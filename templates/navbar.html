@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold text-primary" href="/">
             <i class="fas fa-network-wired me-2"></i>
@@ -11,21 +11,46 @@
         </button>
         
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/projektleitung/">Projektleitung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/it-bau/">IT-Bau</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wlan-ausleuchtung/">WLAN-Ausleuchtung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/imac/">IMAC</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/rollout/">Rollout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stellenangebote/">Stellenangebote</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/kontakt/">Kontakt</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user me-1"></i>{{ user.get_full_name|default:user.username }}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cms-admin/">
+                            <i class="fas fa-cog me-1"></i>CMS
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/cms-admin/">CMS Admin</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/cms-admin/logout/">Logout</a></li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cms-admin/logout/">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="/cms-admin/login/">
+                        <a class="btn btn-outline-primary btn-sm" href="/cms-admin/login/">
                             <i class="fas fa-sign-in-alt me-1"></i>Login
                         </a>
                     </li>
