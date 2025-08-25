@@ -1,9 +1,11 @@
 from .base import *
 
 DEBUG = True
-SECRET_KEY = 'django-insecure-dev-key-for-development-only'
+# SECURITY WARNING: keep the secret key used in production secret!
+with open('/etc/secret_key/secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['staging.comtura.de']
 
 # Development-specific settings
 INTERNAL_IPS = ['127.0.0.1']

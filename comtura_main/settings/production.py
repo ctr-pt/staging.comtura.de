@@ -10,8 +10,8 @@ try:
 except FileNotFoundError:
     raise Exception('Secret key file not found!')
 
-ALLOWED_HOSTS = ['staging.comtura.de']
-CSRF_TRUSTED_ORIGINS = ['https://staging.comtura.de']
+ALLOWED_HOSTS = ['comtura.de']
+CSRF_TRUSTED_ORIGINS = ['https://comtura.de']
 
 # Production Database (PostgreSQL recommended)
 DATABASES = {
