@@ -4,3 +4,4 @@ staticfiles/
 apps/__pycache__/
 apps/homepage/__pycache__/
 apps/homepage/migrations/
+media/

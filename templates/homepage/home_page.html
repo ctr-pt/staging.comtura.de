@@ -100,7 +100,7 @@
             {% if page.portfolio_items %}
                 <ul class="list-unstyled">
                     {% for item in page.portfolio_items %}
-                        <li>■ {{ item.value|richtext }}</li>
+                        <li>{{ item.value|richtext }}</li>
                     {% endfor %}
                 </ul>
             {% else %}

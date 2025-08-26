@@ -146,3 +146,73 @@ body.bg-light {
 .container-fluid {
     max-width: 1400px;
 }
+
+/* Navbar Dropdown Hover-Effekte */
+.navbar-nav .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar-nav .dropdown-menu {
+    margin-top: 0;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    border-radius: 8px;
+}
+
+.navbar-nav .dropdown-item {
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .dropdown-item:hover {
+    background-color: var(--comtura-primary);
+    color: white;
+    transform: translateX(5px);
+}
+
+.navbar-nav .dropdown-item i {
+    color: var(--comtura-primary);
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .dropdown-item:hover i {
+    color: white;
+}
+
+/* Dropdown Divider Styling */
+.dropdown-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid rgba(7, 104, 175, 0.2);
+}
+
+/* Navbar Link Hover-Effekte */
+.navbar-nav .nav-link {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--comtura-primary) !important;
+    transform: translateY(-1px);
+}
+
+/* Aktive Navigation markieren */
+.navbar-nav .nav-link.active {
+    color: var(--comtura-primary) !important;
+    font-weight: 600;
+}
+
+/* Responsive Dropdown für Mobile */
+@media (max-width: 991.98px) {
+    .navbar-nav .dropdown:hover .dropdown-menu {
+        display: none; /* Hover-Effekt nur auf Desktop */
+    }
+    
+    .navbar-nav .dropdown-item {
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar-nav .dropdown-item:hover {
+        transform: none;
+    }
+}

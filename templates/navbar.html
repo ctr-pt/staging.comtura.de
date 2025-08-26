@@ -12,14 +12,22 @@
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                <!-- Home Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Home
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/unternehmen/">Unternehmen</a></li>
+                        <li><a class="dropdown-item" href="/soziales-engagement/">Soziales Engagement</a></li>
+                    </ul>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="/projektleitung/">Projektleitung</a>
+                    <a class="nav-link" href="/projektleitung/">IT-Bau</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/it-bau/">IT-Bau</a>
+                                <li class="nav-item">
+                    <a class="nav-link" href="/it-bau/">Projektleitung</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/wlan-ausleuchtung/">WLAN-Ausleuchtung</a>
