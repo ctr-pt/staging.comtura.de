@@ -8,7 +8,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 urlpatterns = [
     path('ctr_admin/', admin.site.urls),
-    path('cms-admin/', include(wagtailadmin_urls)),
+    path('cms_admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     
     # Alle anderen URLs werden von Wagtail behandelt

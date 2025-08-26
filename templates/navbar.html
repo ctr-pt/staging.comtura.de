@@ -1,9 +1,9 @@
 {% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold text-primary" href="/">
-            <i class="fas fa-network-wired me-2"></i>
-            comtura
+            <img src="{% static 'media/comtura_logo.png' %}" alt="Comtura" style="height:32px;" class="me-2 align-middle">
         </a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -24,10 +24,10 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/projektleitung/">IT-Bau</a>
+                    <a class="nav-link" href="/it-bau/">IT-Bau</a>
                 </li>
                                 <li class="nav-item">
-                    <a class="nav-link" href="/it-bau/">Projektleitung</a>
+                    <a class="nav-link" href="/projektleitung/">Projektleitung</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/wlan-ausleuchtung/">WLAN-Ausleuchtung</a>
@@ -49,16 +49,16 @@
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/cms-admin/">
+                        <a class="nav-link" href="/cms_admin/">
                             <i class="fas fa-cog me-1"></i>CMS
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cms-admin/logout/">Logout</a>
+                        <a class="nav-link" href="/cms_admin/logout/">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary btn-sm" href="/cms-admin/login/">
+                        <a class="btn btn-outline-primary btn-sm" href="/cms_admin/login/">
                             <i class="fas fa-sign-in-alt me-1"></i>Login
                         </a>
                     </li>

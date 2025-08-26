@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,7 +7,7 @@
     <title>{% block title %}{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} | comtura IT-Servicegesellschaft{% endblock %}</title>
     <meta name="description" content="{% if page.search_description %}{{ page.search_description }}{% else %}comtura IT-Servicegesellschaft für Industrie und Handel - Ihr strategischer IT-Dienstleister{% endif %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <link rel="shortcut icon" type="image/png" href="{% static 'media/comtura_favicon.svg' %}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
