@@ -4,9 +4,8 @@
     {% endif %}
     
     <div class="row text-center">
-        {% widthratio 12 value.stats|length 1 as col_width %}
         {% for stat in value.stats %}
-            <div class="col-md-{{ col_width }} mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card bg-light h-100">
                     <div class="card-body">
                         {% if stat.icon_class %}

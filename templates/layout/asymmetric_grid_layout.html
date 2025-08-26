@@ -1,10 +1,15 @@
 {% load wagtailcore_tags %}
+
 <div class="container my-5">
-  <div class="row g-4">
-    {% for block in page.content_blocks %}
-      <div class="col-md-{% cycle '6' '4' %}">
-        {% include_block block %}
-      </div>
-    {% endfor %}
-  </div>
+    <div class="row g-4">
+        {% for item in value.items %}
+            <div class="col-md-{% cycle '6' '4' '8' '3' '9' %} mb-4">
+                <div class="grid-item {% if item.background_color %}{{ item.background_color }} p-4 rounded{% endif %}">
+                    {% for block in item.content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>

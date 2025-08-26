@@ -306,6 +306,25 @@ class HeroContentLayout(blocks.StructBlock):
         icon = 'image'
         label = 'Hero Content Layout'
 
+class ParallaxSectionLayout(blocks.StructBlock):
+    sections = blocks.ListBlock(
+        blocks.StructBlock([
+            ('background_image', ImageChooserBlock(required=True, help_text="Hintergrundbild für Parallax-Effekt")),
+            ('overlay_opacity', blocks.FloatBlock(default=0.4, min_value=0, max_value=1, help_text="Dunkle Überlagerung (0 = transparent, 1 = vollständig dunkel)")),
+            ('content', blocks.StreamBlock([
+                ('text', blocks.RichTextBlock()),
+                ('quote', QuoteBlock()),
+                ('stats', StatsBlock()),
+                ('html', blocks.RawHTMLBlock()),
+            ], required=False)),
+        ])
+    )
+    
+    class Meta:
+        template = 'layout/parallax_section_layout.html'
+        icon = 'repeat'
+        label = 'Parallax-Sektionen'
+
 # ähnliche für SidebarLayout, GridLayout, etc...
 
 class ContentPage(Page):

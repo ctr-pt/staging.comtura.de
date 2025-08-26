@@ -1,20 +1,28 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-{% if page.bg_image %}
-<section class="parallax-section" style="background-image: url('{{ page.bg_image.url }}'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 60px 0;">
-{% else %}
-<section class="parallax-section" style="background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 60px 0;">
-{% endif %}
-  <div class="container text-white">
-    {% if page.parallax_title %}
-      <h2 class="mb-4 text-center">{{ page.parallax_title }}</h2>
-    {% endif %}
-    <div class="row">
-      {% for block in page.content_blocks %}
-        <div class="col-md-12">
-          {% include_block block %}
+{% for section in value.sections %}
+    <section class="parallax-section position-relative" 
+             style="background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 80px 0; min-height: 60vh;">
+        
+        {% if section.background_image %}
+            {% image section.background_image original as bg_img %}
+            <div class="parallax-bg position-absolute top-0 start-0 w-100 h-100" 
+                 style="background-image: url('{{ bg_img.url }}'); background-attachment: fixed; background-position: center; background-size: cover; z-index: -2;"></div>
+        {% endif %}
+        
+        {% if section.overlay_opacity %}
+            <div class="parallax-overlay position-absolute top-0 start-0 w-100 h-100 bg-dark" 
+                 style="opacity: {{ section.overlay_opacity }}; z-index: -1;"></div>
+        {% endif %}
+        
+        <div class="container position-relative text-white">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    {% for block in section.content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
+    </section>
+{% endfor %}
