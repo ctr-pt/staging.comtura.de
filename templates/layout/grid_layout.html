@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+
+<div class="grid-layout my-5">
+    {% if value.grid_title %}
+        <h2 class="text-center mb-4">{{ value.grid_title }}</h2>
+    {% endif %}
+    
+    <div class="row">
+        {% for item in value.grid_items %}
+            <div class="col-md-{{ item.width }} mb-4">
+                <div class="grid-item {% if item.background_color %}{{ item.background_color }} p-4 rounded{% endif %}">
+                    {% for block in item.content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

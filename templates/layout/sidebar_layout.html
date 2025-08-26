@@ -1,0 +1,43 @@
+{% load wagtailcore_tags %}
+
+<div class="sidebar-layout my-5">
+    <div class="row">
+        {% if value.sidebar_position == 'left' %}
+            <!-- Sidebar Links -->
+            <div class="col-md-{{ value.sidebar_width }}">
+                <div class="sidebar bg-light p-4 rounded">
+                    {% for block in value.sidebar_content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-{{ 12|add:0|sub:value.sidebar_width|default:8 }}">
+                <div class="main-content">
+                    {% for block in value.main_content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <!-- Main Content -->
+            <div class="col-md-{{ 12|add:0|sub:value.sidebar_width|default:8 }}">
+                <div class="main-content">
+                    {% for block in value.main_content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Sidebar Rechts -->
+            <div class="col-md-{{ value.sidebar_width }}">
+                <div class="sidebar bg-light p-4 rounded">
+                    {% for block in value.sidebar_content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
