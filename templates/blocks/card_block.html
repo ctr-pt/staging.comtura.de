@@ -1,0 +1,36 @@
+{% load wagtailimages_tags %}
+
+<div class="card-block my-5">
+    {% if value.title %}
+        <h2 class="text-center mb-4">{{ value.title }}</h2>
+    {% endif %}
+    
+    <div class="row">
+        {% for card in value.cards %}
+            <div class="col-md-{% if value.cards_per_row == '2' %}6{% elif value.cards_per_row == '4' %}3{% else %}4{% endif %} mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if card.image %}
+                        {% image card.image fill-400x200 as card_image %}
+                        <img src="{{ card_image.url }}" class="card-img-top" alt="{{ card.title }}">
+                    {% endif %}
+                    
+                    <div class="card-body text-center">
+                        {% if card.icon_class %}
+                            <i class="{{ card.icon_class }} fa-3x text-primary mb-3"></i>
+                        {% endif %}
+                        
+                        <h5 class="card-title">{{ card.title }}</h5>
+                        
+                        {% if card.text %}
+                            <p class="card-text">{{ card.text }}</p>
+                        {% endif %}
+                        
+                        {% if card.link_url and card.link_text %}
+                            <a href="{{ card.link_url }}" class="btn btn-primary">{{ card.link_text }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

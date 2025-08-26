@@ -1,0 +1,22 @@
+<div class="stats-block my-5">
+    {% if value.title %}
+        <h2 class="text-center mb-4">{{ value.title }}</h2>
+    {% endif %}
+    
+    <div class="row text-center">
+        {% widthratio 12 value.stats|length 1 as col_width %}
+        {% for stat in value.stats %}
+            <div class="col-md-{{ col_width }} mb-4">
+                <div class="card bg-light h-100">
+                    <div class="card-body">
+                        {% if stat.icon_class %}
+                            <i class="{{ stat.icon_class }} fa-2x text-primary mb-3"></i>
+                        {% endif %}
+                        <h2 class="text-primary">{{ stat.number }}</h2>
+                        <p class="mb-0">{{ stat.label }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

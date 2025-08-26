@@ -1,0 +1,41 @@
+{% load wagtailimages_tags %}
+
+<div class="carousel-block my-5">
+    {% if value.title %}
+        <h2 class="text-center mb-4">{{ value.title }}</h2>
+    {% endif %}
+    
+    <div id="carousel-{{ block.id }}" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for slide in value.slides %}
+                <button type="button" data-bs-target="#carousel-{{ block.id }}" data-bs-slide-to="{{ forloop.counter0 }}" 
+                        {% if forloop.first %}class="active"{% endif %}></button>
+            {% endfor %}
+        </div>
+        
+        <div class="carousel-inner">
+            {% for slide in value.slides %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    {% image slide.image fill-1200x600 as carousel_image %}
+                    <img src="{{ carousel_image.url }}" class="d-block w-100" alt="{{ slide.title }}">
+                    {% if slide.title or slide.text %}
+                        <div class="carousel-caption d-none d-md-block">
+                            {% if slide.title %}<h5>{{ slide.title }}</h5>{% endif %}
+                            {% if slide.text %}<p>{{ slide.text }}</p>{% endif %}
+                            {% if slide.link_url and slide.link_text %}
+                                <a href="{{ slide.link_url }}" class="btn btn-primary">{{ slide.link_text }}</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ block.id }}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ block.id }}" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>

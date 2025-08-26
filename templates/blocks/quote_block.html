@@ -1,0 +1,19 @@
+{% load wagtailimages_tags %}
+
+<div class="quote-block my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <blockquote class="blockquote text-center">
+                <p class="mb-4">"{{ value.quote_text }}"</p>
+                <footer class="blockquote-footer">
+                    {% if value.author_image %}
+                        {% image value.author_image fill-80x80 class="rounded-circle me-3" %}
+                    {% endif %}
+                    <strong>{{ value.author }}</strong>
+                    {% if value.author_title %}, {{ value.author_title }}{% endif %}
+                    {% if value.author_company %}<br><cite title="Source Title">{{ value.author_company }}</cite>{% endif %}
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
