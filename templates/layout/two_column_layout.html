@@ -1,19 +1,17 @@
 {% load wagtailcore_tags %}
 
-<div class="two-column-layout my-5">
+<div class="container">
     <div class="row">
-        {% widthratio 12 value.left_width 1 as right_width %}
-        <div class="col-md-{{ value.left_width }}">
+        <div class="col-md-6">
             <div class="left-column">
-                {% for block in value.left_column %}
+                {% for block in page.left_column %}
                     {% include_block block %}
                 {% endfor %}
             </div>
         </div>
-        
-        <div class="col-md-{{ right_width }}">
+        <div class="col-md-6">
             <div class="right-column">
-                {% for block in value.right_column %}
+                {% for block in page.right_column %}
                     {% include_block block %}
                 {% endfor %}
             </div>

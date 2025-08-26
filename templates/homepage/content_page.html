@@ -4,7 +4,7 @@
 {% block title %}{{ page.title }} | comtura IT-Servicegesellschaft{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <h1 class="text-primary mb-4">{{ page.title }}</h1>
@@ -15,9 +15,27 @@
                 </div>
             {% endif %}
             
-            {% for block in page.content_blocks %}
-                {% include_block block %}
-            {% endfor %}
+            <!-- Layout-spezifische Templates einbinden -->
+            {% if page.layout_choice == 'hero_content' %}
+                {% include 'layout/hero_content_layout.html' %}
+            {% elif page.layout_choice == 'two_column' %}
+                {% include 'layout/two_column_layout.html' %}
+            {% elif page.layout_choice == 'three_column' %}
+                {% include 'layout/three_column_layout.html' %}
+            {% elif page.layout_choice == 'sidebar' %}
+                {% include 'layout/sidebar_layout.html' %}
+            {% elif page.layout_choice == 'grid' %}
+                {% include 'layout/grid_layout.html' %}
+            {% elif page.layout_choice == 'asymmetric_grid' %}
+                {% include 'layout/asymmetric_grid_layout.html' %}
+            {% elif page.layout_choice == 'timeline' %}
+                {% include 'layout/timeline_layout.html' %}
+            {% elif page.layout_choice == 'parallax_section' %}
+                {% include 'layout/parallax_section_layout.html' %}
+            {% else %}
+                <!-- Fallback: Hero Content Layout -->
+                {% include 'layout/hero_content_layout.html' %}
+            {% endif %}
         </div>
     </div>
 </div>

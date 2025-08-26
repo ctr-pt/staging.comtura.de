@@ -1,0 +1,20 @@
+{% load wagtailcore_tags %}
+
+{% if page.bg_image %}
+<section class="parallax-section" style="background-image: url('{{ page.bg_image.url }}'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 60px 0;">
+{% else %}
+<section class="parallax-section" style="background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; padding: 60px 0;">
+{% endif %}
+  <div class="container text-white">
+    {% if page.parallax_title %}
+      <h2 class="mb-4 text-center">{{ page.parallax_title }}</h2>
+    {% endif %}
+    <div class="row">
+      {% for block in page.content_blocks %}
+        <div class="col-md-12">
+          {% include_block block %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

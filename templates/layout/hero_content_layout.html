@@ -1,21 +1,19 @@
 {% load wagtailcore_tags %}
 
-<div class="hero-content-layout">
-    <!-- Hero Section -->
-    {% if value.hero_section %}
-        <div class="hero-section mb-5">
-            {% for block in value.hero_section %}
-                {% include_block block %}
-            {% endfor %}
+<!-- Hero Section -->
+{% if page.hero_content %}
+<section class="hero-section mb-5">
+    {% for block in page.hero_content %}
+        <div class="hero-block">
+            {% include_block block %}
         </div>
-    {% endif %}
-    
-    <!-- Content Section -->
-    {% if value.content_section %}
-        <div class="content-section">
-            {% for block in value.content_section %}
-                {% include_block block %}
-            {% endfor %}
-        </div>
-    {% endif %}
-</div>
+    {% endfor %}
+</section>
+{% endif %}
+
+<!-- Main Content -->
+<section class="main-content">
+    {% for block in page.main_content %}
+        {% include_block block %}
+    {% endfor %}
+</section>

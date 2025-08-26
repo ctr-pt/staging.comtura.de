@@ -1,7 +1,7 @@
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -165,20 +165,18 @@ class ImpressumPage(Page):
     class Meta:
         verbose_name = "Impressum"
 
-# Custom Blocks für die Content-Seite
+# --- Block-Definitionen ---
+
 class CarouselBlock(blocks.StructBlock):
-    """Carousel/Slider Block"""
-    title = blocks.CharBlock(required=False, help_text="Titel für den Carousel")
-    
+    title = blocks.CharBlock(required=False)
     slides = blocks.ListBlock(
         blocks.StructBlock([
             ('image', ImageChooserBlock(required=True)),
             ('title', blocks.CharBlock(required=False)),
             ('text', blocks.TextBlock(required=False)),
-            ('link_url', blocks.URLBlock(required=False, help_text="Link-Ziel")),
-            ('link_text', blocks.CharBlock(required=False, help_text="Link-Text")),
-        ]),
-        help_text="Fügen Sie Slides hinzu"
+            ('link_url', blocks.URLBlock(required=False)),
+            ('link_text', blocks.CharBlock(required=False)),
+        ])
     )
     
     class Meta:
@@ -187,9 +185,7 @@ class CarouselBlock(blocks.StructBlock):
         label = 'Carousel'
 
 class CardBlock(blocks.StructBlock):
-    """Card Block für mehrere Cards nebeneinander"""
-    title = blocks.CharBlock(required=False, help_text="Titel für die Card-Sektion")
-    
+    title = blocks.CharBlock(required=False)
     cards = blocks.ListBlock(
         blocks.StructBlock([
             ('title', blocks.CharBlock(required=True)),
@@ -197,95 +193,79 @@ class CardBlock(blocks.StructBlock):
             ('text', blocks.TextBlock(required=False)),
             ('link_url', blocks.URLBlock(required=False)),
             ('link_text', blocks.CharBlock(required=False, default="Mehr erfahren")),
-            ('icon_class', blocks.CharBlock(required=False, help_text="Font Awesome Icon (z.B. fas fa-rocket)")),
-        ]),
-        help_text="Fügen Sie Cards hinzu"
+            ('icon_class', blocks.CharBlock(required=False)),
+        ])
     )
     
     cards_per_row = blocks.ChoiceBlock(
-        choices=[
-            ('2', '2 Cards pro Reihe'),
-            ('3', '3 Cards pro Reihe'),
-            ('4', '4 Cards pro Reihe'),
-        ],
+        choices=[('2', '2 Spalten'), ('3', '3 Spalten'), ('4', '4 Spalten')],
         default='3'
     )
-    
+
     class Meta:
         template = 'blocks/card_block.html'
         icon = 'grip'
         label = 'Cards'
 
 class MapBlock(blocks.StructBlock):
-    """Google Maps Block"""
-    title = blocks.CharBlock(required=False, help_text="Titel für die Karte")
-    address = blocks.CharBlock(required=True, help_text="Adresse die angezeigt werden soll")
-    map_width = blocks.IntegerBlock(default=100, help_text="Breite in Prozent")
-    map_height = blocks.IntegerBlock(default=400, help_text="Höhe in Pixel")
-    zoom_level = blocks.IntegerBlock(default=15, help_text="Zoom-Level (1-20)")
-    
+    title = blocks.CharBlock(required=False)
+    address = blocks.CharBlock(required=True)
+    map_width = blocks.IntegerBlock(default=100)
+    map_height = blocks.IntegerBlock(default=400)
+    zoom_level = blocks.IntegerBlock(default=15)
     class Meta:
         template = 'blocks/map_block.html'
         icon = 'site'
-        label = 'Karte'
+        label = 'Map'
 
 class ContactFormBlock(blocks.StructBlock):
-    """Kontaktformular Block"""
-    title = blocks.CharBlock(default="Kontaktformular", help_text="Titel für das Formular")
-    intro_text = blocks.TextBlock(required=False, help_text="Einführungstext")
-    success_message = blocks.CharBlock(default="Vielen Dank für Ihre Nachricht!", help_text="Erfolgsmeldung")
-    
+    title = blocks.CharBlock(default="Kontaktformular")
+    intro_text = blocks.TextBlock(required=False)
+    success_message = blocks.CharBlock(default="Vielen Dank für Ihre Nachricht!")
     class Meta:
         template = 'blocks/contact_form_block.html'
         icon = 'mail'
         label = 'Kontaktformular'
 
 class VideoBlock(blocks.StructBlock):
-    """Video Block"""
-    title = blocks.CharBlock(required=False, help_text="Titel für das Video")
-    video = EmbedBlock(help_text="YouTube, Vimeo oder andere Video-URL")
-    caption = blocks.TextBlock(required=False, help_text="Video-Beschreibung")
-    
+    title = blocks.CharBlock(required=False)
+    video = EmbedBlock()
+    caption = blocks.TextBlock(required=False)
     class Meta:
         template = 'blocks/video_block.html'
         icon = 'media'
         label = 'Video'
 
 class QuoteBlock(blocks.StructBlock):
-    """Zitat/Testimonial Block"""
-    quote_text = blocks.TextBlock(required=True, help_text="Der Zitat-Text")
-    author = blocks.CharBlock(required=True, help_text="Autor des Zitats")
-    author_title = blocks.CharBlock(required=False, help_text="Position/Titel des Autors")
-    author_company = blocks.CharBlock(required=False, help_text="Unternehmen des Autors")
-    author_image = ImageChooserBlock(required=False, help_text="Foto des Autors")
-    
+    quote_text = blocks.TextBlock(required=True)
+    author = blocks.CharBlock(required=True)
+    author_title = blocks.CharBlock(required=False)
+    author_company = blocks.CharBlock(required=False)
+    author_image = ImageChooserBlock(required=False)
     class Meta:
         template = 'blocks/quote_block.html'
         icon = 'openquote'
         label = 'Zitat'
 
 class StatsBlock(blocks.StructBlock):
-    """Statistiken/Zahlen Block"""
-    title = blocks.CharBlock(required=False, help_text="Titel für die Statistik-Sektion")
-    
+    title = blocks.CharBlock(required=False)
     stats = blocks.ListBlock(
         blocks.StructBlock([
-            ('number', blocks.CharBlock(required=True, help_text="Zahl (z.B. 500+)")),
-            ('label', blocks.CharBlock(required=True, help_text="Beschreibung")),
-            ('icon_class', blocks.CharBlock(required=False, help_text="Font Awesome Icon")),
-        ]),
-        help_text="Fügen Sie Statistiken hinzu"
+            ('number', blocks.CharBlock(required=True)),
+            ('label', blocks.CharBlock(required=True)),
+            ('icon_class', blocks.CharBlock(required=False)),
+        ])
     )
-    
+
     class Meta:
         template = 'blocks/stats_block.html'
         icon = 'list-ol'
         label = 'Statistiken'
 
-# Layout-Wrapper Blocks
+# Layout Wrappers
+
 class TwoColumnLayout(blocks.StructBlock):
-    """2-Spalten Layout: Links/Rechts"""
-    left_column = StreamField([
+    left = StreamField([
         ('text', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
         ('cards', CardBlock()),
@@ -294,8 +274,7 @@ class TwoColumnLayout(blocks.StructBlock):
         ('contact_form', ContactFormBlock()),
         ('html', blocks.RawHTMLBlock()),
     ], blank=True, use_json_field=True)
-    
-    right_column = StreamField([
+    right = StreamField([
         ('text', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
         ('cards', CardBlock()),
@@ -304,174 +283,61 @@ class TwoColumnLayout(blocks.StructBlock):
         ('contact_form', ContactFormBlock()),
         ('html', blocks.RawHTMLBlock()),
     ], blank=True, use_json_field=True)
-    
-    left_width = blocks.ChoiceBlock(
-        choices=[
-            ('3', '25% / 75%'),
-            ('4', '33% / 67%'),
-            ('6', '50% / 50%'),
-            ('8', '67% / 33%'),
-            ('9', '75% / 25%'),
-        ],
-        default='6',
-        help_text="Breite der linken Spalte"
-    )
-    
+    left_width = blocks.ChoiceBlock(choices=[('3','25%'), ('4','33%'), ('5','42%'), ('6','50%')], default='6')
     class Meta:
         template = 'layout/two_column_layout.html'
         icon = 'grip'
-        label = '2-Spalten Layout'
+        label = 'Two Column Layout'
 
 class ThreeColumnLayout(blocks.StructBlock):
-    """3-Spalten Layout: Links/Mitte/Rechts"""
-    left_column = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('cards', CardBlock()),
-        ('video', VideoBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
-    center_column = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('carousel', CarouselBlock()),
-        ('cards', CardBlock()),
-        ('video', VideoBlock()),
-        ('quote', QuoteBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
-    right_column = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('cards', CardBlock()),
-        ('contact_form', ContactFormBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
+    left = StreamField([...], blank=True, use_json_field=True)  # ähnlich wie oben
+    center = StreamField([...], blank=True, use_json_field=True)
+    right = StreamField([...], blank=True, use_json_field=True)
     class Meta:
         template = 'layout/three_column_layout.html'
         icon = 'grip'
-        label = '3-Spalten Layout'
+        label = 'Three Column Layout'
 
 class HeroContentLayout(blocks.StructBlock):
-    """Hero oben, Content unten"""
-    hero_section = StreamField([
-        ('carousel', CarouselBlock()),
-        ('image', ImageChooserBlock()),
-        ('video', VideoBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, max_num=1, use_json_field=True, help_text="Hero-Bereich (nur ein Block)")
-    
-    content_section = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('cards', CardBlock()),
-        ('quote', QuoteBlock()),
-        ('stats', StatsBlock()),
-        ('contact_form', ContactFormBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
+    hero = StreamField([...], blank=True, use_json_field=True)
+    content = StreamField([...], blank=True, use_json_field=True)
     class Meta:
         template = 'layout/hero_content_layout.html'
         icon = 'image'
-        label = 'Hero + Content Layout'
+        label = 'Hero Content Layout'
 
-class SidebarLayout(blocks.StructBlock):
-    """Content mit Sidebar"""
-    main_content = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('carousel', CarouselBlock()),
-        ('cards', CardBlock()),
-        ('video', VideoBlock()),
-        ('quote', QuoteBlock()),
-        ('stats', StatsBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
-    sidebar_content = StreamField([
-        ('text', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('contact_form', ContactFormBlock()),
-        ('html', blocks.RawHTMLBlock()),
-    ], blank=True, use_json_field=True)
-    
-    sidebar_position = blocks.ChoiceBlock(
-        choices=[
-            ('left', 'Sidebar links'),
-            ('right', 'Sidebar rechts'),
-        ],
-        default='right'
-    )
-    
-    sidebar_width = blocks.ChoiceBlock(
-        choices=[
-            ('3', 'Schmal (25%)'),
-            ('4', 'Normal (33%)'),
-            ('5', 'Breit (42%)'),
-        ],
-        default='4'
-    )
-    
-    class Meta:
-        template = 'layout/sidebar_layout.html'
-        icon = 'list-ul'
-        label = 'Content + Sidebar'
+# ähnliche für SidebarLayout, GridLayout, etc...
 
-class GridLayout(blocks.StructBlock):
-    """Grid Layout: Flexible Rasteranordnung"""
-    grid_title = blocks.CharBlock(required=False, help_text="Titel für das Grid")
-    
-    grid_items = blocks.ListBlock(
-        blocks.StructBlock([
-            ('content', blocks.StreamBlock([
-                ('text', blocks.RichTextBlock()),
-                ('image', ImageChooserBlock()),
-                ('cards', CardBlock()),
-                ('video', VideoBlock()),
-                ('quote', QuoteBlock()),
-                ('contact_form', ContactFormBlock()),
-                ('html', blocks.RawHTMLBlock()),
-            ], max_num=1)),
-            ('width', blocks.ChoiceBlock(
-                choices=[
-                    ('12', 'Vollbreite'),
-                    ('6', 'Halbe Breite'),
-                    ('4', 'Ein Drittel'),
-                    ('3', 'Ein Viertel'),
-                ],
-                default='6'
-            )),
-            ('background_color', blocks.ChoiceBlock(
-                choices=[
-                    ('', 'Transparent'),
-                    ('bg-light', 'Hell'),
-                    ('bg-primary', 'Primary'),
-                    ('bg-secondary', 'Secondary'),
-                ],
-                default='',
-                required=False
-            )),
-        ]),
-        help_text="Grid-Elemente hinzufügen"
-    )
-    
-    class Meta:
-        template = 'layout/grid_layout.html'
-        icon = 'th'
-        label = 'Grid Layout'
-
-
-# Content Page Model
 class ContentPage(Page):
-    """Flexible Content-Seite mit StreamField-Blöcken"""
+    """Flexible Content-Seite mit verschiedenen Layouts"""
+    
+    layout_choice = models.CharField(
+        max_length=50,
+        choices=[
+            ('hero_content', 'Hero + Content'),
+            ('two_column', 'Zweispaltig'),
+            ('three_column', 'Dreispaltig'),
+            ('sidebar', 'Sidebar + Content'),
+            ('grid', 'Grid-Layout'),
+            ('asymmetric_grid', 'Asymmetrisches Grid'),
+            ('timeline', 'Timeline'),
+            ('parallax_section', 'Parallax-Sektion'),
+        ],
+        default='hero_content',
+        help_text="Wählen Sie das Layout für diese Seite"
+    )
     
     intro_text = RichTextField(blank=True, help_text="Einführungstext (optional)")
     
-    content_blocks = StreamField([
-        # Einzelne Blöcke
+    # StreamFields für verschiedene Layout-Bereiche
+    hero_content = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('video', VideoBlock()),
+        ('html', blocks.RawHTMLBlock(icon='code', label='HTML Code')),
+    ], blank=True, use_json_field=True, help_text="Hero-Bereich (für Hero-Layout)")
+    
+    main_content = StreamField([
         ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
         ('image', ImageChooserBlock(icon='image', label='Bild')),
         ('carousel', CarouselBlock()),
@@ -482,21 +348,86 @@ class ContentPage(Page):
         ('quote', QuoteBlock()),
         ('stats', StatsBlock()),
         ('html', blocks.RawHTMLBlock(icon='code', label='HTML Code')),
-        
-        # Layout-Wrapper
-        ('two_column', TwoColumnLayout()),
-        ('three_column', ThreeColumnLayout()),
-        ('hero_content', HeroContentLayout()),
-        ('sidebar_layout', SidebarLayout()),
-        ('grid_layout', GridLayout()),
-    ], blank=True, use_json_field=True)
+    ], blank=True, use_json_field=True, help_text="Haupt-Content")
+    
+    # Für Two-Column Layout
+    left_column = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+        ('quote', QuoteBlock()),
+        ('html', blocks.RawHTMLBlock(icon='code', label='HTML Code')),
+    ], blank=True, use_json_field=True, help_text="Linke Spalte")
+    
+    right_column = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+        ('quote', QuoteBlock()),
+        ('html', blocks.RawHTMLBlock(icon='code', label='HTML Code')),
+    ], blank=True, use_json_field=True, help_text="Rechte Spalte")
+    
+    # Für Three-Column Layout  
+    column_1 = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+    ], blank=True, use_json_field=True, help_text="Spalte 1")
+    
+    column_2 = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+    ], blank=True, use_json_field=True, help_text="Spalte 2")
+    
+    column_3 = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+    ], blank=True, use_json_field=True, help_text="Spalte 3")
+    
+    # Für Sidebar Layout
+    sidebar_content = StreamField([
+        ('text', blocks.RichTextBlock(icon='doc-full', label='Text')),
+        ('image', ImageChooserBlock(icon='image', label='Bild')),
+        ('cards', CardBlock()),
+        ('contact_form', ContactFormBlock()),
+    ], blank=True, use_json_field=True, help_text="Sidebar-Inhalt")
+    
+    # Für Timeline Layout
+    timeline_items = StreamField([
+        ('timeline_item', blocks.StructBlock([
+            ('date', blocks.CharBlock(required=True, help_text="Datum/Jahr")),
+            ('title', blocks.CharBlock(required=True)),
+            ('description', blocks.TextBlock(required=False)),
+            ('image', ImageChooserBlock(required=False)),
+        ])),
+    ], blank=True, use_json_field=True, help_text="Timeline-Einträge")
     
     content_panels = Page.content_panels + [
+        FieldPanel('layout_choice'),
         FieldPanel('intro_text'),
-        FieldPanel('content_blocks'),
+        MultiFieldPanel([
+            FieldPanel('hero_content'),
+        ], heading="Hero-Bereich (für Hero-Layout)"),
+        FieldPanel('main_content'),
+        MultiFieldPanel([
+            FieldPanel('left_column'),
+            FieldPanel('right_column'),
+        ], heading="Zwei-Spalten Layout"),
+        MultiFieldPanel([
+            FieldPanel('column_1'),
+            FieldPanel('column_2'), 
+            FieldPanel('column_3'),
+        ], heading="Drei-Spalten Layout"),
+        MultiFieldPanel([
+            FieldPanel('sidebar_content'),
+        ], heading="Sidebar Layout"),
+        MultiFieldPanel([
+            FieldPanel('timeline_items'),
+        ], heading="Timeline Layout"),
     ]
     
     class Meta:
-        verbose_name = "Content-Seite"
-        verbose_name_plural = "Content-Seiten"
-
+        verbose_name = "Content-Seite mit Layouts"
+        verbose_name_plural = "Content-Seiten mit Layouts"

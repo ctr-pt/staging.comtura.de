@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="container">
+    <div class="timeline">
+        {% for item in page.timeline_items %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">{{ item.value.date }}</div>
+                    <h3>{{ item.value.title }}</h3>
+                    {% if item.value.description %}
+                        <p>{{ item.value.description }}</p>
+                    {% endif %}
+                    {% if item.value.image %}
+                        {% image item.value.image fill-300x200 %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
